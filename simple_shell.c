@@ -10,21 +10,30 @@ int main(void)
 
 {
 	char *buffer = NULL;
-	size_t buffsize = 0;
 
 	while (1)
 	{
 		printf("$ ");
-		if (getline(&buffer, &buffsize, stdin) == -1)
+		fflush(stdout);
+
+		buffer = readLine();
+
+		if (buffer[0] == '\0')
 		{
-			printf("\n");
 			break;
 		}
-			buffer[strlen(buffer) - 1] = '\0';
-			parseCommand(buffer);
+		buffer[strlen(buffer) - 1] = '\0';
 
+		if (buffer[0] != '\0')
+		{
+/**			printf("%s\n", buffer); **/
+			parseCommand(buffer);
+		}
+
+		free(buffer);
 	}
-	free(buffer);
+
+	fflush(stdout);
 
 	return (0);
 }
