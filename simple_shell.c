@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - The entry point of the shell program
+ *
+ * Return: Always 0 (success)
+ */
+
 int main(void)
 
 {
@@ -11,7 +17,7 @@ int main(void)
 		printf("$ ");
 		if (getline(&buffer, &buffsize, stdin) == -1)
 		{
-			printf ("\n");
+			printf("\n");
 			break;
 		}
 			buffer[strlen(buffer) - 1] = '\0';

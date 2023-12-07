@@ -2,6 +2,14 @@
 
 #define GET_SIZE 1024
 
+/**
+ * buffer_allocation - Allocates memory for a buffer
+ * @getPtr: Pointer to the buffer pointer
+ * @a: pointer to the size variable
+ *
+ */
+
+
 void buffer_allocation(char **getPtr, size_t *a)
 
 {
@@ -13,6 +21,14 @@ void buffer_allocation(char **getPtr, size_t *a)
 		exit(EXIT_FAILURE);
 	}
 }
+
+/**
+ * _getline - reads a line from a stream and stores it in a buffer
+ * @getPtr: pointer to the buffer pointer
+ * @a: pointer to the size variable
+ * @stream: the input stream
+ * Return: Number of characters read, or -1 on failure
+ */
 
 ssize_t _getline(char **getPtr, size_t *a, FILE *stream)
 
@@ -33,7 +49,6 @@ ssize_t _getline(char **getPtr, size_t *a, FILE *stream)
 			if (i == 0)
 			{
 				return (-1);
-				break;
 			}
 		}
 		if (i >= *a - 1)

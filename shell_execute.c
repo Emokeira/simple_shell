@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * executeCommand - executes a command with it's arguments
+ * in a new process
+ * @args: Array of strings with the command and its arguments
+ *
+ */
+
 void executeCommand(char *args[])
 
 {
@@ -12,7 +19,7 @@ void executeCommand(char *args[])
 		perror("Error");
 		exit(EXIT_FAILURE);
 	}
-	else if ( pid == 0)
+	else if (pid == 0)
 	{
 		execvp(args[0], args);
 		fprintf(stderr, "Error: No such file or directory\n");
@@ -21,12 +28,18 @@ void executeCommand(char *args[])
 	else
 	{
 		(void)wpid;
-		do
-		{
+
+		do {
 			wpid = waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
+
+/**
+ * parseCommand - Parses a command into an array of arguments
+ * and executes it
+ * @command: The input to be parsed and executed
+ */
 
 void parseCommand(char *command)
 
