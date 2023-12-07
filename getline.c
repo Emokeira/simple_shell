@@ -1,72 +1,72 @@
 #include "main.h"
 
-#define GET_SIZE 1024
+#define BUFFER_SIZE 256
 
-/**
- * buffer_allocation - Allocates memory for a buffer
- * @getPtr: Pointer to the buffer pointer
- * @a: pointer to the size variable
- *
- */
+static char buffer[BUFFER_SIZE];
+static size_t currentPosition = 0;
 
-
-void buffer_allocation(char **getPtr, size_t *a)
+char *_getline()
 
 {
-	*a = GET_SIZE;
-	*getPtr = (char *)malloc(*a);
-	if (!*getPtr)
+	if (currentPosition == 0)
 	{
-		perror("custom getline malloc");
-		exit(EXIT_FAILURE);
+		ssize_t bytesRead = read(STDIN_FILENO, buffer, BUFFER_SIZE - 1);
+
+		if (bytesRead <= 0)
+		{
+			char *result = (char *)malloc(currentPosition + 1);
+			if (result == NULL)
+			{
+				perror("Memory allocation error");
+				exit(EXIT_FAILURE);
+			}
+
+			strncpy(result, buffer, currentPosition);
+			result[currentPosition] = '\0';
+
+			return (result);
+		}
+		currentPosition += bytesRead;
 	}
+	return (_getlineHelper());
 }
 
-/**
- * _getline - reads a line from a stream and stores it in a buffer
- * @getPtr: pointer to the buffer pointer
- * @a: pointer to the size variable
- * @stream: the input stream
- * Return: Number of characters read, or -1 on failure
- */
-
-ssize_t _getline(char **getPtr, size_t *a, FILE *stream)
+char *_getlineHelper()
 
 {
-	char currentChar;
-	size_t i = 0, buffer_index = 0;
-	static char buffer[GET_SIZE];
+	size_t i;
 
-	if (*getPtr == NULL || *a == 0)
-		buffer_allocation(getPtr, a);
-
-	printf("$ ");
-
-	while (1)
+	for (i = 0; i < currentPosition; ++i)
 	{
-		if (buffer_index == 0 && read(fileno(stream), buffer, GET_SIZE) == 0)
+		if (buffer[i] == '\n')
 		{
-			if (i == 0)
+			char *result = (char *)malloc(i + 2);
+			if (result == NULL)
 			{
-				return (-1);
+				perror("Memory allocation error");
+				exit(EXIT_FAILURE);
 			}
-		}
-		if (i >= *a - 1)
-		{
-			*a += GET_SIZE;
-			free(*getPtr);
-			buffer_allocation(getPtr, a);
-		}
 
-		currentChar = buffer[buffer_index++];
-		(*getPtr)[i++] = currentChar;
+			strncpy(result, buffer, i + 1);
+			result[i + 1] = '\0';
 
-		if (currentChar == '\n')
-			break;
-		if (buffer_index == GET_SIZE)
-			buffer_index = 0;
+			memmove(buffer, buffer + i + 1, currentPosition - i - 1);
+			currentPosition -= i + 1;
+
+			return (result);
+		}
 	}
-	(*getPtr)[i] = '\0';
+	currentPosition = 0;
+	return (_getline());
+}
 
-	return (i);
+void _processLine(char *buffer)
+
+{
+	if (buffer[0] != '\0')
+	{
+		buffer[strlen(buffer) - 1] = '\0';
+		printf("%s\n", buffer);
+	}
+	free(buffer);
 }

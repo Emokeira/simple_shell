@@ -1,18 +1,9 @@
-
-/*
- * custom_strtok - custom implementation of the strtok function
- * which tokenizes a string based on the specified delimiter
- * Maintains state accross calls using a static pointer
- * @str: a pointer to the string to be tokenized
- * @delim: a pointer to the string with the delimiter characters
- *
- * Return: a pointer to the next token in the string
- * or NULL if no more tokens
- */
+#include "main.h"
 
 char *custom_strtok(char *str, const char *delim)
+
 {
-	static char *current;
+	static char *current = NULL;
 	char *start, *end;
 
 	if (str != NULL)
@@ -20,7 +11,7 @@ char *custom_strtok(char *str, const char *delim)
 		current = str;
 	}
 
-	if (current == NULL || *current == '\0')
+	if (current == NULL || *current =='\0')
 	{
 		return (NULL);
 	}
@@ -33,6 +24,7 @@ char *custom_strtok(char *str, const char *delim)
 	{
 		return (NULL);
 	}
+
 	start = current;
 	end = strpbrk(start, delim);
 
@@ -45,6 +37,5 @@ char *custom_strtok(char *str, const char *delim)
 		*end = '\0';
 		current = end + 1;
 	}
-
 	return (start);
 }
