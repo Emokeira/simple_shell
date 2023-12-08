@@ -1,5 +1,15 @@
 #include "main.h"
 
+/**
+ * custom_strtok - custom implementation of strtok function
+ *
+ * @str: the string to tokenize
+ * @delim: the delimeter characters
+ *
+ * Return: pointer to the next token in the string
+ * or NULL if no more tokens
+ */
+
 char *custom_strtok(char *str, const char *delim)
 
 {
@@ -11,7 +21,7 @@ char *custom_strtok(char *str, const char *delim)
 		current = str;
 	}
 
-	if (current == NULL || *current =='\0')
+	if (current == NULL || *current == '\0')
 	{
 		return (NULL);
 	}

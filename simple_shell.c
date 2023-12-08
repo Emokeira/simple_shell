@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - Entry point for the program
+ *
+ * Return: Always returns o
+ */
+
 int main(void)
 
 {
@@ -11,7 +17,6 @@ int main(void)
 		fflush(stdout);
 
 		buffer = _getline();
-	
 		if (buffer[0] == '\0')
 		{
 			break;
@@ -23,7 +28,6 @@ int main(void)
 		{
 			parseCommand(buffer);
 		}
-	
 		free(buffer);
 	}
 

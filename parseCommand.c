@@ -2,6 +2,13 @@
 
 extern char **environ;
 
+/**
+ * _builtFunctions - execute built-in functions or
+ * delegate to executeCommand
+ *
+ * @args: array of strings representing the command and its arguments
+ */
+
 void _builtFunctions(char *args[])
 
 {
@@ -53,6 +60,12 @@ void _builtFunctions(char *args[])
 		executeCommand(args);
 	}
 }
+
+/**
+ * parseCommand - parse command string into an array of arguments
+ *
+ * @command: the command string to be parsed
+ */
 
 void parseCommand(char *command)
 

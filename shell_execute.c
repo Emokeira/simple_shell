@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * executeCommand - Executes a command using fork and execvp
+ *
+ * @rgs: Array of strings representing the command and its arguments
+ *
+ */
 extern char **environ;
 
 void executeCommand(char *args[])
@@ -34,6 +40,12 @@ void executeCommand(char *args[])
 		}
 	}
 }
+
+/**
+ * handleExit - handle the exit process
+ * waiting for the child process and initialize exit status
+ * @args: Array of strings with the command and its arguments
+ */
 
 void handleExit(char *args[])
 

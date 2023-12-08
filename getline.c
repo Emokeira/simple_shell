@@ -5,6 +5,12 @@
 static char buffer[BUFFER_SIZE];
 static size_t currentPosition = 0;
 
+/**
+ * _getline - custom function to read a line from standard input
+ *
+ * Return: a pointer to the string containing the line
+ */
+
 char *_getline()
 
 {
@@ -15,6 +21,7 @@ char *_getline()
 		if (bytesRead <= 0)
 		{
 			char *result = (char *)malloc(currentPosition + 1);
+
 			if (result == NULL)
 			{
 				perror("Memory allocation error");
@@ -31,6 +38,13 @@ char *_getline()
 	return (_getlineHelper());
 }
 
+/**
+ * _getLineHelper - helper function for processing the buffer
+ * and extracting a line
+ *
+ * Return: A pointer to the string containing the line
+ */
+
 char *_getlineHelper()
 
 {
@@ -41,6 +55,7 @@ char *_getlineHelper()
 		if (buffer[i] == '\n')
 		{
 			char *result = (char *)malloc(i + 2);
+
 			if (result == NULL)
 			{
 				perror("Memory allocation error");
@@ -59,6 +74,12 @@ char *_getlineHelper()
 	currentPosition = 0;
 	return (_getline());
 }
+
+/**
+ * _processLine - process and print a line from the buffer
+ *
+ * @buffer: the buffer containing the line to be processed
+ */
 
 void _processLine(char *buffer)
 
