@@ -22,7 +22,7 @@ void executeCommand(char *args[])
 	}
 	else if (pid == 0)
 	{
-		if (strchr(args[0], '/') == NULL)
+		if (strrchr(args[0], '/') == NULL)
 		{
 			char *path = getenv("PATH");
 			char *pathCopy = strdup(path);
@@ -33,6 +33,7 @@ void executeCommand(char *args[])
 				char fullPath[1024];
 				snprintf(fullPath, sizeof(fullPath), "%s/%s", dir, args[0]);
 				execve(fullPath, args, environ);
+				dir = strtok(NULL, ":");
 			}
 			fprintf(stderr, "Error: Command not found in PATH\n");
 			free(pathCopy);
