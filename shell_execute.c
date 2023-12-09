@@ -22,15 +22,33 @@ void executeCommand(char *args[])
 	}
 	else if (pid == 0)
 	{
-		execvp(args[0], args);
-		fprintf(stderr, "Error: No such file or directory\n");
-		exit(EXIT_FAILURE);
+		if (strchr(args[0], '/') == NULL)
+		{
+			char *path = getenv("PATH");
+			char *pathCopy = strdup(path);
+			char *dir = strtok(pathCopy, ":");
+
+			while (dir != NULL)
+			{
+				char fullPath[1024];
+				snprintf(fullPath, sizeof(fullPath), "%s/%s", dir, args[0]);
+				execve(fullPath, args, environ);
+			}
+			fprintf(stderr, "Error: Command not found in PATH\n");
+			free(pathCopy);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			execve(args[0], args, environ);
+			fprintf(stderr, "Error: No such file or diractory\n");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
 		(void)wpid;
-		do
-		{
+		do {
 			wpid = waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 
@@ -55,8 +73,7 @@ void handleExit(char *args[])
 	long exit_status;
 	pid_t wpid;
 
-	do
-	{
+	do {
 		wpid = waitpid(-1, &status, WUNTRACED);
 	} while (wpid > 0 && !WIFEXITED(status) && !WIFSIGNALED(status));
 
