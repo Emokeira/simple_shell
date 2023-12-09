@@ -23,5 +23,7 @@ char *custom_strtok(char *str, const char *delim);
 
 void _builtFunctions(char *args[]);
 
+char *trimSpaces(char *str);
+void updatePWD(void);
 
 #endif
