@@ -39,7 +39,7 @@ char *_getline()
 }
 
 /**
- * _getLineHelper - helper function for processing the buffer
+ * _getlineHelper - helper function for processing the buffer
  * and extracting a line
  *
  * Return: A pointer to the string containing the line
