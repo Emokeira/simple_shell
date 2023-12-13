@@ -24,7 +24,7 @@ void executeCommand(char *args[])
 		{
 			char *path = getenv("PATH");
 			char *pathCopy = strdup(path);
-			char *dir = strtok(pathCopy, ":");
+			char *dir = custom_strtok(pathCopy, ":");
 
 			while (dir != NULL)
 			{
@@ -32,7 +32,7 @@ void executeCommand(char *args[])
 
 				snprintf(fullPath, sizeof(fullPath), "%s/%s", dir, args[0]);
 				execve(fullPath, args, environ);
-				dir = strtok(NULL, ":");
+				dir = custom_strtok(NULL, ":");
 			}
 			write(STDERR_FILENO, "Error: Command not found in PATH\n",
 					strlen("Error: Command not found in PATH\n"));

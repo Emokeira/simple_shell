@@ -11,10 +11,10 @@
 
 int main(int argc, char *argv[])
 {
+	char *buffer = NULL;
+
 	if (isatty(STDIN_FILENO))
 	{
-		char *buffer = NULL;
-
 		while (write(STDOUT_FILENO, "$ ", 2) && fflush(stdout) == 0)
 		{
 			buffer = _getline();
@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 		handleNonInteractiveMode(argc, argv);
 	}
 
+	free(buffer);
 	fflush(stdout);
 	return (0);
 }
