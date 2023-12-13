@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
 			if (buffer[0] == '\0' || buffer[0] == '\n')
 			{
+				free(buffer);
 				break;
 			}
 

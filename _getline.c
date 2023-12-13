@@ -74,20 +74,3 @@ char *_getlineHelper()
 	currentPosition = 0;
 	return (_getline());
 }
-
-/**
- * _processLine - process and print a line from the buffer
- *
- * @buffer: the buffer containing the line to be processed
- */
-
-void _processLine(char *buffer)
-
-{
-	if (buffer[0] != '\0')
-	{
-		buffer[strlen(buffer) - 1] = '\0';
-		printf("%s\n", buffer);
-	}
-	free(buffer);
-}

@@ -50,12 +50,11 @@ void parseCommands(char *commands);
 void parseCommand(char *command);
 void executeCommand(char *args[]);
 void executeChild(char *args[]);
+char *searchCommandInPath(char *args[]);
 int handleBuiltInCommands(char *args[]);
 
 char *_getline();
 char *_getlineHelper();
-
-void processline(char* buffer);
 
 char *custom_strtok(char *str, const char *delim);
 

@@ -1,44 +1,6 @@
 #include "main.h"
 
 /**
- * executeCommand - executes a command with the given arguments
- * @args: array of strings with the command and its arguments
- */
-
-void executeCommand(char *args[])
-{
-	int status;
-	pid_t pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		write(STDERR_FILENO, "Error\n", strlen("Error\n"));
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		executeChild(args);
-	}
-	else
-	{
-		int wstatus;
-
-		waitpid(pid, &wstatus, 0);
-
-		if (strcmp(args[0], "exit") == 0)
-		{
-			handleExit(args);
-		}
-	}
-
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-	{
-
-	}
-}
-
-/**
  * executeChild - Execute the child command in the child process
  * @args: array of strings containing the command and it's arguments
  **/
