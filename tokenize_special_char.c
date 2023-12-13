@@ -2,7 +2,6 @@
 
 #define MAX_ARGS 10
 
-char *args[MAX_ARGS] = {NULL};
 
 /**
  * tokenizeAndHandle - tokenizes a command and handles the arguments
@@ -31,43 +30,6 @@ int tokenizeAndHandle(char *segment)
 	}
 
 	return (0);
-}
-
-/**
- * handleSemiColon - splits a command segment using semicoloms
- * and proceeds each statement
- * @segment: the command segment to be split and processed
- */
-
-void handleSemiColon(char *segment)
-{
-	size_t len;
-	char *token, *trimmedSegment;
-	char *delimiter = ";";
-
-	token = strtok(segment, delimiter);
-
-	while (token != NULL)
-	{
-		trimmedSegment = token;
-		while (*trimmedSegment == ' ' || *trimmedSegment == '\t')
-		{
-			++trimmedSegment;
-		}
-		len = strlen(trimmedSegment);
-		while (len > 0 && (trimmedSegment[len - 1] == ' ' || trimmedSegment[len - 1] == '\t'))
-		{
-			--len;
-		}
-		trimmedSegment[len] = '\0';
-
-		if (strlen(trimmedSegment) > 0)
-		{
-			handleSegment(trimmedSegment);
-		}
-
-		token = strtok(NULL, delimiter);
-	}
 }
 
 /**

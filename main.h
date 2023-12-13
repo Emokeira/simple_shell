@@ -26,6 +26,7 @@ extern int aliasCount;
 Alias aliases[MAX_ALIASES];
 
 extern int aliasCount;
+extern char **environ;
 
 int handleAlias(char *input);
 void writeAlias(const char *str);
@@ -48,6 +49,7 @@ void parseCommands(char *commands);
 
 void parseCommand(char *command);
 void executeCommand(char *args[]);
+void executeChild(char *args[]);
 int handleBuiltInCommands(char *args[]);
 
 char *_getline();

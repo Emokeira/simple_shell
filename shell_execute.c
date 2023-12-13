@@ -1,7 +1,5 @@
 #include "main.h"
 
-extern char **environ;
-
 /**
  * executeCommand - executes a command with the given arguments
  * @args: array of strings with the command and its arguments
@@ -20,6 +18,34 @@ void executeCommand(char *args[])
 	}
 	else if (pid == 0)
 	{
+		executeChild(args);
+	}
+	else
+	{
+		int wstatus;
+
+		waitpid(pid, &wstatus, 0);
+
+		if (strcmp(args[0], "exit") == 0)
+		{
+			handleExit(args);
+		}
+	}
+
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+
+	}
+}
+
+/**
+ * executeChild - Execute the child command in the child process
+ * @args: array of strings containing the command and it's arguments
+ **/
+
+void executeChild(char *args[])
+{
+
 		if (strchr(args[0], '/') == NULL)
 		{
 			char *path = getenv("PATH");
@@ -46,23 +72,6 @@ void executeCommand(char *args[])
 					strlen("Error: No such file or  directory\n"));
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-	{
-		int wstatus;
-
-		waitpid(pid, &wstatus, 0);
-
-		if (strcmp(args[0], "exit") == 0)
-		{
-			handleExit(args);
-		}
-	}
-
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-	{
-
-	}
 }
 
 /**
@@ -77,11 +86,9 @@ void handleExit(char *args[])
 	long exit_status;
 	pid_t wpid;
 
-	do
-	{
+	do {
 		wpid = waitpid(-1, &status, WUNTRACED);
-	}
-	while(wpid > 0 && !WIFEXITED(status) && !WIFSIGNALED(status));
+	} while (wpid > 0 && !WIFEXITED(status) && !WIFSIGNALED(status));
 
 	if (args[1] != NULL)
 	{

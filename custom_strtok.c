@@ -13,7 +13,7 @@
 char *custom_strtok(char *str, const char *delim)
 
 {
-	static char *current = NULL;
+	static char *current;
 	char *start, *end;
 
 	if (str != NULL)

@@ -3,7 +3,7 @@
 #define BUFFER_SIZE 256
 
 static char buffer[BUFFER_SIZE];
-static size_t currentPosition = 0;
+static size_t currentPosition;
 
 /**
  * _getline - custom function to read a line from standard input
