@@ -24,7 +24,7 @@ int handleBuiltInCommands(char *args[])
 	}
 	else if (strcmp(args[0], "unsetenv") == 0)
 	{
-		unsetEnvironmentVariables(args);
+		unsetEnvironmentVariable(args);
 	}
 	else if (strcmp(args[0], "cd") == 0)
 	{
@@ -49,7 +49,7 @@ void exitShell(void)
  * printEnvironment - prints environment variables
  * to standard output
  */
-void printEvironment(void)
+void printEnvironment(void)
 {
 	char *env_var;
 	int i = 0;

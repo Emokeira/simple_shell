@@ -11,7 +11,7 @@ char *args[MAX_ARGS] = {NULL};
  * Return: 1 if the command is not a built-in command, 0 if otherwise
  */
 
-int tokenizeAndhandle(char *segment)
+int tokenizeAndHandle(char *segment)
 {
 	char *token = custom_strtok(segment, " ");
 	char *args[MAX_ARGS] = {NULL};
@@ -45,7 +45,7 @@ void handleSemiColon(char *segment)
 	char *token, *trimmedSegment;
 	char *delimiter = ";";
 
-	token = strtok(segment, delimeter);
+	token = strtok(segment, delimiter);
 
 	while (token != NULL)
 	{
@@ -66,7 +66,7 @@ void handleSemiColon(char *segment)
 			handleSegment(trimmedSegment);
 		}
 
-		token = strtok(NULL, delimeter);
+		token = strtok(NULL, delimiter);
 	}
 }
 

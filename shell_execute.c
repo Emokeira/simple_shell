@@ -23,7 +23,7 @@ void executeCommand(char *args[])
 		if (strchr(args[0], '/') == NULL)
 		{
 			char *path = getenv("PATH");
-			char *pathcopy = strdup(path);
+			char *pathCopy = strdup(path);
 			char *dir = strtok(pathCopy, ":");
 
 			while (dir != NULL)
@@ -39,31 +39,30 @@ void executeCommand(char *args[])
 			free(pathCopy);
 			exit(EXIT_FAILURE);
 		}
+		else
+		{
+			execve(args[0], args, environ);
+			write(STDERR_FILENO, "Error: No such file or directory\n",
+					strlen("Error: No such file or  directory\n"));
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
-		execve(args[0], args, environ);
-		write(STDERR_FILENO, "Error: No such file or directory\n",
-				strlen("Error: No such file or  directory\n"));
-		exit(EXIT_FAILURE);
+		int wstatus;
+
+		waitpid(pid, &wstatus, 0);
+
+		if (strcmp(args[0], "exit") == 0)
+		{
+			handleExit(args);
+		}
 	}
-}
-else
-{
-	int wstatus;
 
-	waitpid(pid, &wstatus, 0);
-
-	if (strcmp(args[0], "exit") == 0)
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
-		handleExit(args);
+
 	}
-}
-
-if (WIFEXITED(status) && WEXITSTATUS(status) !+0)
-{
-
-}
 }
 
 /**
@@ -89,7 +88,7 @@ void handleExit(char *args[])
 		errno = 0;
 		exit_status = strtol(args[1], &endptr, 10);
 
-		if ((eerno == ERANGE && (exit_status == LONG_MAX ||
+		if ((errno == ERANGE && (exit_status == LONG_MAX ||
 						exit_status == LONG_MIN)) ||
 			(errno != 0 && exit_status == 0) || *endptr != '\0')
 		{

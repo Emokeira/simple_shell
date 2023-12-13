@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define MAX_BUFFER_SIZE_1024
+#define MAX_BUFFER_SIZE 1024
 
 /**
  * main - the entry point of the program
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
 		while (write(STDOUT_FILENO, "$ ", 2) && fflush(stdout) == 0)
 		{
-			buffer = _getLine();
+			buffer = _getline();
 
 			if (buffer[0] == '\0' || buffer[0] == '\n')
 			{
@@ -67,7 +67,7 @@ void executeCommandsFromFile(int file_descriptor)
 		if (bytesRead > 0)
 		{
 			buffer[bytesRead - 1] = '\0';
-			processCommandsegments(buffer);
+			processCommandSegments(buffer);
 		}
 	}
 	free(buffer);

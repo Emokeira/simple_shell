@@ -21,11 +21,13 @@ void handleSegment(char *segment)
 
 int processCommandSegments(char *trimmedSegment)
 {
-	if (strcmp(trimmedSegment, "alias", 5) == 0)
+	/**
+	 if (strncmp(trimmedSegment, "alias", 5) == 0)
 	{
 		return (handleAlias(trimmedSegment));
 	}
-	else if (strstr(trimmedSegment, "||") != NULL)
+	**/
+	if (strstr(trimmedSegment, "||") != NULL)
 	{
 		handleOrOperator(trimmedSegment);
 	}
