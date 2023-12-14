@@ -6,13 +6,12 @@ static char buffer[BUFFER_SIZE];
 static size_t currentPosition;
 
 /**
- * _getline - custom function to read a line from standard input
+ * _getline - custom function to read a line from std input
  *
  * Return: a pointer to the string containing the line
- */
+ **/
 
 char *_getline()
-
 {
 	if (currentPosition == 0)
 	{
@@ -20,18 +19,8 @@ char *_getline()
 
 		if (bytesRead <= 0)
 		{
-			char *result = (char *)malloc(currentPosition + 1);
-
-			if (result == NULL)
-			{
-				perror("Memory allocation error");
-				exit(EXIT_FAILURE);
-			}
-
-			strncpy(result, buffer, currentPosition);
-			result[currentPosition] = '\0';
-
-			return (result);
+			buffer[currentPosition] = '\0';
+			return (buffer);
 		}
 		currentPosition += bytesRead;
 	}
@@ -42,35 +31,30 @@ char *_getline()
  * _getlineHelper - helper function for processing the buffer
  * and extracting a line
  *
- * Return: A pointer to the string containing the line
- */
+ * Return: a pointer to the string containing the line
+ **/
 
 char *_getlineHelper()
-
 {
 	size_t i;
 
-	for (i = 0; i < currentPosition; ++i)
+	for (i = 0; i < currentPosition; i++)
 	{
 		if (buffer[i] == '\n')
 		{
-			char *result = (char *)malloc(i + 2);
-
-			if (result == NULL)
+			if (i < BUFFER_SIZE - 1)
 			{
-				perror("Memory allocation error");
-				exit(EXIT_FAILURE);
+				buffer[i + 1] = '\0';
 			}
-
-			strncpy(result, buffer, i + 1);
-			result[i + 1] = '\0';
-
+			else
+			{
+				buffer[i] = '\0';
+			}
 			memmove(buffer, buffer + i + 1, currentPosition - i - 1);
 			currentPosition -= i + 1;
-
-			return (result);
+			return (buffer);
 		}
 	}
 	currentPosition = 0;
 	return (_getline());
-}
+}				
