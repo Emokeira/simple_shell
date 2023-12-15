@@ -43,20 +43,19 @@ void handleAndOperator(char *segment)
 	char *andOperator = "&&", *operator;
 	int status;
 
-	operator = strstr(segment, andOperator);
+	args[0] = segment;
 
-	if (operator != NULL)
+	while ((operator = strstr(args[0], andOperator)) != NULL)
 	{
 		*operator = '\0';
-		args[0] = segment;
-
 		status = tokenizeAndHandle(args[0]);
+		args[0] = operator + 2;
 
-		if (status == 0)
-		{
-			processCommandSegments(operator + strlen(andOperator));
-		}
+		if (status != 0)
+			break;
 	}
+
+	processCommandSegments(args[0]);
 }
 
 /**
