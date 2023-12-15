@@ -14,15 +14,17 @@ int tokenizeAndHandle(char *segment)
 {
 	char *token = custom_strtok(segment, " ");
 	char *args[MAX_ARGS] = {NULL};
-	int i = 0;
+	int i = 0, count = 0;
 
 	while (token != NULL && i < MAX_ARGS - 1)
 	{
 		args[i++] = token;
+		count++;
 		token = custom_strtok(NULL, " ");
 	}
 
 	args[i] = NULL;
+	printf("%d\n", count);
 
 	if (!handleBuiltInCommands(args))
 	{

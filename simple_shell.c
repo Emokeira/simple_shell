@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
 	fflush(stdout);
 	_exit(EXIT_SUCCESS);
 }
-
 /**
  * executeCommandsFromFile - Execute commands read from a file descriptor
  * @file_descriptor: file descriptor for the input source
