@@ -4,7 +4,6 @@
  * executeCommand - execute the fork process
  * @args: array of characters to be passed as arguments
  **/
-
 void executeCommand(char *args[])
 {
 	int status = 0;
@@ -44,19 +43,21 @@ void executeCommand(char *args[])
 		write(STDERR_FILENO, "Error: Command not found in PATH\n",
 				strlen("Error: Command not found in PATH\n"));
 }
-
 /**
  * searchCommandInPath - searches for the command in
  *			the PATH directory and return the path
  * @args: array of characters to be passed as argument
  * Return: Returns NULL if the command is not found
- **/
+**/
 
 char *searchCommandInPath(char *args[])
 {
 	char *path = getenv("PATH"), *command_path = NULL;
 	char *path_copy = strdup(path);
 	char *token = custom_strtok(path_copy, ":");
+
+	if (access(args[0], X_OK) == 0)
+		return (path_copy);
 
 	while (token != NULL)
 	{

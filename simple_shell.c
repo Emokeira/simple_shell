@@ -14,33 +14,32 @@ int main(int argc, char *argv[])
 {
 	char *buffer = NULL;
 
-	if (isatty(STDIN_FILENO))
+	if (argc > 1)
+		return (1);
+
+	(void)argv;
+	while (1)
 	{
-		while (write(STDOUT_FILENO, "$ ", 2) && fflush(stdout) == 0)
+		if (isatty(STDIN_FILENO) && argc == 1)
+			write(STDOUT_FILENO, "$ ", 2);
+
+		buffer = _getline();
+
+		if (buffer[0] == '\0' || buffer[0] == '\n')
 		{
-			buffer = _getline();
-
-			if (buffer[0] == '\0' || buffer[0] == '\n')
-			{
-				break;
-			}
-			buffer[strlen(buffer) - 1] = '\0';
-
-			if (buffer[0] != '\0')
-			{
-				processCommandSegments(buffer);
-			}
-			buffer = NULL;
+			break;
 		}
-	}
-	else
-	{
-		handleNonInteractiveMode(argc, argv);
+		buffer[strlen(buffer) - 1] = '\0';
+
+		if (buffer[0] != '\0')
+		{
+			processCommandSegments(buffer);
+		}
+		buffer = NULL;
 	}
 	fflush(stdout);
 	_exit(EXIT_SUCCESS);
 }
-
 /**
  * executeCommandsFromFile - Execute commands read from a file descriptor
  * @file_descriptor: file descriptor for the input source
@@ -67,7 +66,7 @@ void executeCommandsFromFile(int file_descriptor)
 		if (bytesRead > 0)
 		{
 			buffer[bytesRead - 1] = '\0';
-	processCommandSegments(buffer);
+			processCommandSegments(buffer);
 		}
 	}
 	free(buffer);
@@ -101,8 +100,8 @@ void handleNonInteractiveMode(int argc, char *argv[])
 	else
 	{
 		if (write(STDERR_FILENO, "Usage: ", 7) == -1 ||
-			write(STDERR_FILENO, argv[0], strlen(argv[0])) == -1 ||
-			write(STDERR_FILENO, " <filename>\n", 12) == -1)
+				write(STDERR_FILENO, argv[0], strlen(argv[0])) == -1 ||
+				write(STDERR_FILENO, " <filename>\n", 12) == -1)
 		{
 			perror("write");
 			_exit(EXIT_FAILURE);
