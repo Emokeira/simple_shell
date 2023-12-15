@@ -57,4 +57,4 @@ char *_getlineHelper()
 	}
 	currentPosition = 0;
 	return (_getline());
-}				
+}
