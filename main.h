@@ -17,20 +17,12 @@
 #define MAX_ALIASES 100
 
 
-typedef struct {
-	char name[MAX_ALIAS_LENGTH];
-	char value[MAX_ALIAS_LENGTH];
-} Alias;
-
-extern int aliasCount;
-Alias aliases[MAX_ALIASES];
-
 extern int aliasCount;
 extern char **environ;
 
 int handleAlias(char *input);
 void writeAlias(const char *str);
-void printAliases();
+void printAliases(void);
 void writeError(const char *errMsg);
 void checkAliasName(char *name);
 void handleAliasDefinitionLogic(char *name, char *value);
@@ -43,7 +35,7 @@ int tokenizeAndHandle(char *segment);
 void handleAndOperator(char *segment);
 void handleOrOperator(char *segment);
 void handleSegment(char *segment);
-void updatePWD();
+void updatePWD(void);
 
 void parseCommands(char *commands);
 
@@ -68,7 +60,7 @@ void setEnvironmentVariable(char *args[]);
 void printEnvironment(void);
 void exitShell(void);
 
-void freeLine(char* line);
+void freeLine(char *line);
 
 void handleNonInteractiveMode(int argc, char *argv[]);
 void executeCommandsFromFile(int file_descriptor);
