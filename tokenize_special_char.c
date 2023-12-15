@@ -54,7 +54,6 @@ void handleAndOperator(char *segment)
 		if (status != 0)
 			break;
 	}
-
 	processCommandSegments(args[0]);
 }
 
