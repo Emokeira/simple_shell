@@ -61,11 +61,11 @@ void executeCommandsFromFile(int file_descriptor)
 		exit(EXIT_FAILURE);
 	}
 
-	while ((bytesRead = read(file_descriptor, buffer, bufSize)) != -1)
+	while ((bytesRead = read(file_descriptor, buffer, bufSize - 1)) != -1)
 	{
 		if (bytesRead > 0)
 		{
-			buffer[bytesRead - 1] = '\0';
+			buffer[bytesRead] = '\0';
 			processCommandSegments(buffer);
 		}
 	}
