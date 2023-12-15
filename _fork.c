@@ -48,13 +48,16 @@ void executeCommand(char *args[])
  *			the PATH directory and return the path
  * @args: array of characters to be passed as argument
  * Return: Returns NULL if the command is not found
- **/
-/**
+**/
+
 char *searchCommandInPath(char *args[])
 {
 	char *path = getenv("PATH"), *command_path = NULL;
 	char *path_copy = strdup(path);
 	char *token = custom_strtok(path_copy, ":");
+
+	if (access(args[0], X_OK) == 0)
+		return (path_copy);
 
 	while (token != NULL)
 	{
@@ -73,4 +76,3 @@ char *searchCommandInPath(char *args[])
 	free(path_copy);
 	return (NULL);
 }
-**/
