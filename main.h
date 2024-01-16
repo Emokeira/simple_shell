@@ -31,7 +31,7 @@ int findAliasIndex(const char *name);
 
 void handleSemiColon(char *segment);
 void handleSegment(char *segment);
-int tokenizeAndHandle(char *segment);
+void tokenizeAndHandle(char *segment);
 void handleAndOperator(char *segment);
 void handleOrOperator(char *segment);
 void handleSegment(char *segment);
@@ -40,7 +40,7 @@ void updatePWD(void);
 void parseCommands(char *commands);
 
 void parseCommand(char *command);
-void executeCommand(char *args[]);
+int executeCommand(char *args[]);
 void executeChild(char *args[]);
 char *searchCommandInPath(char *args[]);
 int handleBuiltInCommands(char *args[]);

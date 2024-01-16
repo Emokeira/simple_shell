@@ -40,8 +40,12 @@ int executeCommand(char *args[])
 		}
 	}
 	else
+	{
 		write(STDERR_FILENO, "Error: Command not found in PATH\n",
 				strlen("Error: Command not found in PATH\n"));
+		return (1);
+	}
+	return (0);
 }
 /**
  * searchCommandInPath - searches for the command in

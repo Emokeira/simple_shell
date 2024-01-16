@@ -10,7 +10,7 @@
  * Return: 1 if the command is not a built-in command, 0 if otherwise
  */
 
-int tokenizeAndHandle(char *segment)
+void tokenizeAndHandle(char *segment)
 {
 	char *token = custom_strtok(segment, " ");
 	char *args[MAX_ARGS] = {NULL};
@@ -24,12 +24,7 @@ int tokenizeAndHandle(char *segment)
 
 	args[i] = NULL;
 
-	if (!handleBuiltInCommands(args))
-	{
-		return (1);
-	}
-
-	return (0);
+	handleBuiltInCommands(args);
 }
 
 /**
@@ -48,7 +43,7 @@ void handleAndOperator(char *segment)
 	while ((operator = strstr(args[0], andOperator)) != NULL)
 	{
 		*operator = '\0';
-		status = tokenizeAndHandle(args[0]);
+		status = executeCommand(args);
 		args[0] = operator + 2;
 
 		if (status != 0)
@@ -75,7 +70,7 @@ void handleOrOperator(char *segment)
 		*operator = '\0';
 		args[0] = segment;
 
-		status = tokenizeAndHandle(args[0]);
+		status = executeCommand(args);
 
 		if (status != 0)
 		{
