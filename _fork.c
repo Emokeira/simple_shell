@@ -4,7 +4,7 @@
  * executeCommand - execute the fork process
  * @args: array of characters to be passed as arguments
  **/
-void executeCommand(char *args[])
+int executeCommand(char *args[])
 {
 	int status = 0;
 	char *command_path;
