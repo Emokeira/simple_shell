@@ -20,6 +20,7 @@
 extern int aliasCount;
 extern char **environ;
 
+void trimWhitespaces(char *str);
 int handleAlias(char *input);
 void writeAlias(const char *str);
 void printAliases(void);

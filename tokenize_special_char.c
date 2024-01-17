@@ -39,6 +39,7 @@ void handleAndOperator(char *segment)
 	int status;
 
 	args[0] = segment;
+	trimWhitespaces(segment);
 
 	while ((operator = strstr(args[0], andOperator)) != NULL)
 	{
@@ -46,10 +47,12 @@ void handleAndOperator(char *segment)
 		status = executeCommand(args);
 		args[0] = operator + 2;
 
-		if (status != 0)
-			break;
+		if (status == 0)
+		{
+			trimWhitespaces(args[0]);
+			processCommandSegments(args[0]);
+		}
 	}
-	processCommandSegments(args[0]);
 }
 
 /**
